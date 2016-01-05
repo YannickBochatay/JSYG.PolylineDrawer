@@ -15,27 +15,18 @@
     "use strict";
     
     /**
-     * Tracé de chemins SVG à la souris
-     * @param arg optionnel, argument JSYG faisant référence à un chemin SVG. Si non défini, un nouveau chemin est créé.
-     * Il pourra étre modifié par la méthode setNode.
+     * Tracé de polylignes et polygones SVG à la souris
      * @param opt optionnel, objet définissant les options.
      * @returns {PolylineDrawer}
      */
-    function PolylineDrawer(arg,opt) {
+    function PolylineDrawer(opt) {
         
         if (opt) this.set(opt);
-        
-        if (!arg) arg = '<'+this.shape+'>';
-        
-        this.setNode(arg);
     }
     
     PolylineDrawer.prototype = new JSYG.StdConstruct();
     
-    PolylineDrawer.prototype.constructor = PolylineDrawer;
-    
-    PolylineDrawer.prototype.defaultShape = "polyline";
-    
+    PolylineDrawer.prototype.constructor = PolylineDrawer;    
     /**
      * zone sur laquelle on affecte les écouteurs d'évènements (si null, prend le parent svg le plus éloigné)
      */
@@ -62,7 +53,7 @@
      */
     PolylineDrawer.prototype.onend = false;
     /**
-     * fonction(s) à éxécuter avant un nouveau point (type "point2point" uniquement)
+     * fonction(s) à éxécuter avant un nouveau point
      */
     PolylineDrawer.prototype.onbeforenewseg = false;
     /**
@@ -79,18 +70,21 @@
     }
     /**
      * Commence le tracé point à point.
-     * @param e objet JSYG.Event
+     * @param shape {JSYG} élément SVG polyline ou polygon
+     * @param e {JSYG.Event}
      * @returns {PolylineDrawer}
      */
-    PolylineDrawer.prototype.draw = function(e) {
+    PolylineDrawer.prototype.draw = function(polyElmt,e) {
         
-        if (!this.node.parentNode) throw new Error("Il faut attacher l'élément à l'arbre DOM");
+        var poly = new JSYG(polyElmt);
         
-        var poly = new JSYG(this.node),
-        jSvg = this.area ? new JSYG(this.area) : poly.offsetParent('farthest'),
+        if (!poly.parent().length) throw new Error("Il faut attacher l'élément à l'arbre DOM");
+        
+        var jSvg = this.area ? new JSYG(this.area) : poly.offsetParent('farthest'),
         mtx = poly.getMtx('screen').inverse(),
         xy = new JSYG.Vect(e.clientX,e.clientY).mtx(mtx),
-        points = this.node.points,
+        node = poly[0],
+        points = node.points,
         that = this;
         
         function mousemove(e) {
@@ -118,17 +112,17 @@
             
             points.replaceItem(seg,nbSegs-1);
             
-            that.trigger('draw',that.node,e);
+            that.trigger('draw',node,e);
         }
         
         function mousedown(e) {
             
-            if (that.trigger('beforenewseg',that.node,e) === false) return;
+            if (that.trigger('beforenewseg',node,e) === false) return;
             
             //si la courbe est fermée, un clic suffit pour terminer.
             if (points.numberOfItems > 3 && isClosed(points)) {
                 
-                if (that.trigger('beforeend',that.node,e) === false) return;
+                if (that.trigger('beforeend',node,e) === false) return;
                 return that.end();
             }
             
@@ -139,14 +133,14 @@
             
             points.appendItem( xy.toSVGPoint() );
             
-            that.trigger('newseg',that.node,e);
+            that.trigger('newseg',node,e);
         }
         
         function dblclick(e,keepLastSeg) {
             
             points.removeItem(points.numberOfItems-1);
             
-            if (that.trigger('beforeend',that.node,e) === false) return;
+            if (that.trigger('beforeend',node,e) === false) return;
             
             points.removeItem(points.numberOfItems-1);
             
@@ -165,7 +159,7 @@
             
             this.inProgress = false;
             
-            this.trigger('end',that.node,e);
+            this.trigger('end',node,e);
             
             this.end = function() { return this; };
         };

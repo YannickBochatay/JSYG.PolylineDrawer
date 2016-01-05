@@ -31,6 +31,7 @@
         </label>
         
         <script>
+            
             var pencil = new JSYG.PolylineDrawer();
             
             $("svg").on("mousedown",function(e) {
@@ -39,13 +40,12 @@
                
                var shape = $('[name=shape]:checked').val();
                               
-               var poly = new JSYG('<'+shape+'>');
+               var poly = new JSYG('<'+shape+'>').appendTo(this);
                
-               poly.appendTo(this);
-               pencil.setNode(poly);
+               pencil.draw(poly,e);
                
-               pencil.draw(e);
             });
+            
         </script>
     </body>
 </html>
