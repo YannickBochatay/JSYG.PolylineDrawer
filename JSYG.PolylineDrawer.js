@@ -3,7 +3,7 @@
 
 (function(factory) {
     
-    if (typeof define != "undefined" && define.amd) define("jsyg-polylinedrawer",["jsyg-path"],factory);
+    if (typeof define != "undefined" && define.amd) define("jsyg-polylinedrawer",["jsyg","jsyg-path"],factory);
     else if (typeof JSYG != "undefined") {
         if (JSYG.Path) factory(JSYG);
         else throw new Error("You need JSYG.Path");
