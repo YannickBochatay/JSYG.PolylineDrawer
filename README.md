@@ -1,23 +1,35 @@
 # JSYG.PolylineDrawer
 Draw polylines and polygon with [JSYG framework](https://github.com/YannickBochatay/JSYG)
 
+
+
 ##### Demo
 [http://yannickbochatay.github.io/JSYG.PolylineDrawer/](http://yannickbochatay.github.io/JSYG.PolylineDrawer/)
 
+
+
 ##### Installation
 ```shell
-bower install jsyg-polylinedrawer
+npm install jsyg-polylinedrawer
 ```
+You can also install it with bower
 
-##### Example
+
+
+##### Example with webpack/babel
 ```javascript
-var pencil = new JSYG.PolylineDrawer();
+import PolylineDrawer from "jsyg-polylinedrawer"
+
+let pencil = new PolylineDrawer()
             
-$("svg").on("mousedown",function(e) {
+document.querySelector("svg").addEventListener("mousedown",function(e) {
 
    if (pencil.inProgress) return;
 
-   var poly = JSYG('<polyline>').appendTo(this);
+   let poly = document.createElementNS("http://www.w3.org/2000/svg","polyline");
+   //with JSYG framework : path = JSYG("<polyline>")
+
+   this.appendChild(poly);
 
    pencil.draw(poly,e);
 

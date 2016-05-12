@@ -4,6 +4,7 @@
     "description" : "JSYG plugin for drawing interactive svg polylines and polygons",
     "main": "JSYG.PolylineDrawer.js",
     "moduleType": [
+        "node",
         "amd",
         "globals"
     ],
@@ -11,15 +12,13 @@
         "jsyg-path":"latest"
     },
     "devDependencies": {
-        "qunit": "latest",
-        "requirejs": "latest"
     },
     "repository": {
         "type": "git",
         "url": "git://github.com/YannickBochatay/JSYG.PolylineDrawer.git"
     },
     "license": "MIT",
-    "ignore": ["**/.*","tests","bower_components","nbproject"],
+    "ignore": ["**/.*","tests","bower_components","node_modules","nbproject"],
     "keywords": [
         "svg",
         "jsyg",
