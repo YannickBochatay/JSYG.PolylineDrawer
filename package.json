@@ -1,6 +1,6 @@
 {
   "name": "jsyg-polylinedrawer",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "JSYG plugin for drawing interactive svg polylines and polygons",
   "main": "JSYG.PolylineDrawer.js",
   "directories": {
@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/YannickBochatay/JSYG.PolylineDrawer#readme",
   "dependencies": {
-    "jsyg-path":""
+    "jsyg-path": "^1.0.0"
   }
 }

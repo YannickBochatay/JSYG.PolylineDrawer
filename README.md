@@ -12,7 +12,6 @@ Draw polylines and polygon with [JSYG framework](https://github.com/YannickBocha
 ```shell
 npm install jsyg-polylinedrawer
 ```
-You can also install it with bower
 
 
 
