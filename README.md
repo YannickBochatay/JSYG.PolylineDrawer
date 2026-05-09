@@ -2,6 +2,8 @@
 
 Draw polylines and polygon with [JSYG framework](https://github.com/YannickBochatay/JSYG)
 
+## ⚠️ Deprecated. Use [@jsyg/polylinedrawer](https://github.com/YannickBochatay/jsyg-monorepo/tree/main/packages/polylinedrawer) instead.
+
 #### Demo
 
 <http://yannickbochatay.github.io/JSYG.PolylineDrawer/>
